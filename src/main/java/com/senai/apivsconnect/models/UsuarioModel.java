@@ -3,16 +3,16 @@ package com.senai.apivsconnect.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.Serial;
 import java.io.Serializable;
+import java.io.Serial;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "tb_usuarios")
-
 public class UsuarioModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -23,9 +23,13 @@ public class UsuarioModel implements Serializable {
     private UUID id;
 
     private String nome;
+    private String email;
     private String senha;
     private String endereco;
     private String cep;
+
     private String tipo_usuario;
+    private String url_img;
+
 
 }

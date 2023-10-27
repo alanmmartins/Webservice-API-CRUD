@@ -44,4 +44,27 @@ public class UsuarioController {
         BeanUtils.copyProperties(usuarioDto, novoUsuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(novoUsuario));
     }
+
+    @PutMapping("/{idUsuario}")
+    public  ResponseEntity<Object>editarUsuario(@PathVariable(value = "idUsuario") UUID id, @RequestBody @Valid UsuarioDto usuarioDto){
+
+        Optional<UsuarioModel> usuarioBuscado = usuarioRepository.findById(id);
+
+        if(usuarioBuscado.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("usuario nao encontrado");
+        }
+        UsuarioModel usuarioBd = usuarioBuscado.get();
+        BeanUtils.copyProperties(usuarioDto, usuarioBd);
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.save(usuarioBd));
+    }
+    @DeleteMapping("/{idUsuario}")
+    public ResponseEntity<Object>deletarUsuario(@PathVariable(value = "idUsuario")UUID id){
+        Optional<UsuarioModel> usuarioBuscado = usuarioRepository.findById(id);
+
+        if (usuarioBuscado.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("usuario nao encontrado");
+        }
+        usuarioRepository.delete(usuarioBuscado.get());
+        return ResponseEntity.status(HttpStatus.OK).body("usuario deletado com sucesso");
+    }
 }
